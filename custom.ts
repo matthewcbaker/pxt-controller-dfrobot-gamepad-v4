@@ -18,13 +18,31 @@ enum ControllerButton {
  * Controller blocks
  */
 //% weight=150 color=#109c35 icon="\uf11b"
+//% groups=['Setup', 'Buttons']
 namespace controller {
+    let _initialised = false
+
+    /**
+     * Sets up the controller
+     */
+    //% block group="Setup"
+    export function initialiseController(): void {
+        pins.setPull(DigitalPin.P8, PinPullMode.PullNone)
+        pins.setPull(DigitalPin.P13, PinPullMode.PullNone)
+        pins.setPull(DigitalPin.P14, PinPullMode.PullNone)
+        pins.setPull(DigitalPin.P15, PinPullMode.PullNone)
+        pins.setPull(DigitalPin.P16, PinPullMode.PullNone)
+        _initialised = true
+    }
+
     /**
      * Checks if the controller button is pressed
      * @param button The button to check
      */
-    //% block="button $button is pressed"
+    //% block="button $button is pressed" group="Buttons"
     export function buttonIsPressed(button: ControllerButton): boolean {
+        if (!_initialised)
+            return false
         switch (button) {
             case ControllerButton.A:
                 return input.buttonIsPressed(Button.A)
