@@ -14,11 +14,20 @@ enum ControllerButton {
     Z
 }
 
+namespace controllerhelpers {
+    export function toHex(a: number): string {
+        const hexarr = '0123456789abcdef'
+        let low = a % 16
+        let high = a - low
+        return hexarr.charAt(high) + hexarr.charAt(low)
+    }
+}
+
 /**
  * Controller blocks
  */
 //% weight=150 color=#109c35 icon="\uf11b"
-//% groups=['Setup', 'Buttons']
+//% groups=['Setup', 'Buttons', 'Transfer']
 namespace controller {
     let _initialised = false
 
@@ -61,5 +70,21 @@ namespace controller {
             default:
                 return false
         }
+    }
+
+    /**
+     * Gets the current status so that it can be sent
+     */
+    //% block group="Transfer"
+    export function getStatus(): string {
+        return controllerhelpers.toHex(
+            (buttonIsPressed(ControllerButton.A) ? 1 : 0) +
+            (buttonIsPressed(ControllerButton.B) ? 2 : 0) +
+            (buttonIsPressed(ControllerButton.C) ? 4 : 0) +
+            (buttonIsPressed(ControllerButton.D) ? 8 : 0) +
+            (buttonIsPressed(ControllerButton.E) ? 16 : 0) +
+            (buttonIsPressed(ControllerButton.F) ? 32 : 0) +
+            (buttonIsPressed(ControllerButton.Z) ? 64 : 0)
+        )
     }
 }
