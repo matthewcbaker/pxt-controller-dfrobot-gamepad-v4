@@ -14,15 +14,6 @@ enum ControllerButton {
     Z
 }
 
-namespace controllerhelpers {
-    export function toHex(a: number): string {
-        const hexarr = '0123456789abcdef'
-        let low = a % 16
-        let high = a - low
-        return hexarr.charAt(high) + hexarr.charAt(low)
-    }
-}
-
 /**
  * Controller blocks
  */
@@ -76,15 +67,14 @@ namespace controller {
      * Gets the current status so that it can be sent
      */
     //% block group="Transfer"
-    export function getStatus(): string {
-        return controllerhelpers.toHex(
-            (buttonIsPressed(ControllerButton.A) ? 1 : 0) +
-            (buttonIsPressed(ControllerButton.B) ? 2 : 0) +
-            (buttonIsPressed(ControllerButton.C) ? 4 : 0) +
-            (buttonIsPressed(ControllerButton.D) ? 8 : 0) +
-            (buttonIsPressed(ControllerButton.E) ? 16 : 0) +
-            (buttonIsPressed(ControllerButton.F) ? 32 : 0) +
-            (buttonIsPressed(ControllerButton.Z) ? 64 : 0)
-        )
+    export function getButtonStatus(): string {
+        return ''
+            .concat((buttonIsPressed(ControllerButton.A) ? 'A' : '-'))
+            .concat((buttonIsPressed(ControllerButton.B) ? 'B' : '-'))
+            .concat((buttonIsPressed(ControllerButton.C) ? 'C' : '-'))
+            .concat((buttonIsPressed(ControllerButton.D) ? 'D' : '-'))
+            .concat((buttonIsPressed(ControllerButton.E) ? 'E' : '-'))
+            .concat((buttonIsPressed(ControllerButton.F) ? 'F' : '-'))
+            .concat((buttonIsPressed(ControllerButton.Z) ? 'Z' : '-'))
     }
 }
