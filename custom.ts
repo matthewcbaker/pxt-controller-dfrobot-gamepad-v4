@@ -36,6 +36,14 @@ namespace controller {
     }
 
     /**
+     * Checks if the controller has been set up
+     */
+    //% block group="Setup"
+    export function controllerIsInitialised(): boolean {
+        return _initialised
+    }
+    
+    /**
      * Checks if the controller button is pressed
      * @param button The button to check
      */
