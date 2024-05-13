@@ -21,9 +21,10 @@ enum ControllerButton {
 //% groups=['Setup', 'Buttons', 'Transfer']
 namespace controller {
     let _initialised = false
+    let _virtual = false
 
     /**
-     * Sets up the controller
+     * Sets up a physical controller
      */
     //% block group="Setup"
     export function initialiseController(): void {
@@ -32,6 +33,15 @@ namespace controller {
         pins.setPull(DigitalPin.P14, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P15, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P16, PinPullMode.PullNone)
+        _initialised = true
+    }
+
+    /**
+     * Sets up the controller as virtual
+     */
+    //% block group="Setup"
+    export function initialiseVirtualController(): void {
+        _virtual = true
         _initialised = true
     }
 
@@ -50,6 +60,8 @@ namespace controller {
     //% block="button $button is pressed" group="Buttons"
     export function buttonIsPressed(button: ControllerButton): boolean {
         if (!_initialised)
+            return false
+        if (_virtual)
             return false
         switch (button) {
             case ControllerButton.A:
