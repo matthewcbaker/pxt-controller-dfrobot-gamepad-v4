@@ -54,16 +54,7 @@ namespace controller {
      * Checks if the controller has been set up
      */
     //% block group="Setup"
-    //% deprecated=true
     export function controllerIsInitialised(): boolean {
-        return _initialised
-    }
-
-    /**
-     * Checks if the controller has been set up
-     */
-    //% block group="Setup"
-    export function controllerInitialised(): boolean {
         return _initialised
     }
 
