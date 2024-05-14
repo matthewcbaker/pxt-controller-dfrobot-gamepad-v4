@@ -14,6 +14,11 @@ enum ControllerButton {
     Z
 }
 
+enum ControllerType {
+    Physical,
+    Virtual
+}
+
 /**
  * Controller blocks
  */
@@ -52,7 +57,23 @@ namespace controller {
     export function controllerIsInitialised(): boolean {
         return _initialised
     }
-    
+
+    /**
+     * Checks the type of the controller
+     * @param ctype The controller type to check
+     */
+    //% block group="Setup"
+    export function controllerType(ctype: ControllerType): boolean {
+        switch (ctype) {
+            case ControllerType.Physical:
+                return !_virtual
+            case ControllerType.Virtual:
+                return _virtual
+            default:
+                return false
+        }
+    }
+
     /**
      * Checks if the controller button is pressed
      * @param button The button to check
