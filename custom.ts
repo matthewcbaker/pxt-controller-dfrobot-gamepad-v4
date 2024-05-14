@@ -62,7 +62,7 @@ namespace controller {
      * Checks the type of the controller
      * @param ctype The controller type to check
      */
-    //% block group="Setup"
+    //% block="controller type is $ctype" group="Setup"
     export function controllerType(ctype: ControllerType): boolean {
         switch (ctype) {
             case ControllerType.Physical:
