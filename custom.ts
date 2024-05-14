@@ -27,6 +27,7 @@ enum ControllerType {
 namespace controller {
     let _initialised = false
     let _virtual = false
+    let _buttonstatus = ""
 
     /**
      * Sets up a physical controller
@@ -74,6 +75,27 @@ namespace controller {
         }
     }
 
+    function virtualButtonIsPressed(button: ControllerButton): boolean {
+        switch (button) {
+            case ControllerButton.A:
+                return _buttonstatus.includes('A')
+            case ControllerButton.B:
+                return _buttonstatus.includes('B')
+            case ControllerButton.C:
+                return _buttonstatus.includes('C')
+            case ControllerButton.D:
+                return _buttonstatus.includes('D')
+            case ControllerButton.E:
+                return _buttonstatus.includes('E')
+            case ControllerButton.F:
+                return _buttonstatus.includes('F')
+            case ControllerButton.Z:
+                return _buttonstatus.includes('Z')
+            default:
+                return false
+        }
+    }
+
     /**
      * Checks if the controller button is pressed
      * @param button The button to check
@@ -83,7 +105,7 @@ namespace controller {
         if (!_initialised)
             return false
         if (_virtual)
-            return false
+            return virtualButtonIsPressed(button)
         switch (button) {
             case ControllerButton.A:
                 return input.buttonIsPressed(Button.A)
@@ -117,5 +139,15 @@ namespace controller {
             .concat((buttonIsPressed(ControllerButton.E) ? 'E' : '-'))
             .concat((buttonIsPressed(ControllerButton.F) ? 'F' : '-'))
             .concat((buttonIsPressed(ControllerButton.Z) ? 'Z' : '-'))
+    }
+
+    /**
+     * Sets the current status so that it can be received
+     */
+    //% block group="Transfer"
+    export function setButtonStatus(status: string): void {
+        if (!_initialised || !_virtual)
+            return
+        _buttonstatus = status
     }
 }
