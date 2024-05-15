@@ -14,6 +14,15 @@ enum ControllerButton {
     Z
 }
 
+enum ControllerStick {
+    Left
+}
+
+enum ControllerStickXY {
+    X,
+    Y
+}
+
 enum ControllerType {
     Physical,
     Virtual
@@ -23,11 +32,13 @@ enum ControllerType {
  * Controller blocks
  */
 //% weight=150 color=#109c35 icon="\uf11b"
-//% groups=['Setup', 'Buttons', 'Transfer']
+//% groups=['Setup', 'Buttons', 'Stick X Y', 'Transfer']
 namespace controller {
     let _initialised = false
     let _virtual = false
     let _buttonstatus = ""
+    let _stickx = 0
+    let _sticky = 0
 
     /**
      * Sets up a physical controller
@@ -126,6 +137,32 @@ namespace controller {
         }
     }
 
+    function physicalUpdateXY(): void {
+        _stickx = (pins.analogReadPin(AnalogPin.P1) / 5) - 100
+        _sticky = (pins.analogReadPin(AnalogPin.P2) / 5) - 100
+    }
+
+    /**
+     * Checks the position of the stick
+     * @param stick The stick to check
+     * @param position The information to retrieve
+     */
+    //% block="stick $stick $position position" group="Stick X Y"
+    export function stickXY(stick: ControllerStick, position: ControllerStickXY): number {
+        if (!_initialised)
+            return 0
+        if (!_virtual)
+            physicalUpdateXY()
+        switch (position) {
+            case ControllerStickXY.X:
+                return _stickx
+            case ControllerStickXY.Y:
+                return _sticky
+            default:
+                return 0
+        }
+    }
+    
     /**
      * Gets the current status so that it can be sent
      */
