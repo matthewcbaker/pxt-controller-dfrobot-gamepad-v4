@@ -187,4 +187,33 @@ namespace controller {
             return
         _buttonstatus = status
     }
+
+    /**
+     * Gets the current status so that it can be sent
+     */
+    //% block group="Transfer"
+    export function getStickStatus(): string {
+        if (!_initialised)
+            return "0,0"
+        if (!_virtual)
+            physicalUpdateXY()
+        return ''
+            .concat(_stickx.toString())
+            .concat(',')
+            .concat(_sticky.toString())
+    }
+
+    /**
+     * Sets the current status so that it can be received
+     */
+    //% block group="Transfer"
+    export function setStickStatus(status: string): void {
+        if (!_initialised || !_virtual)
+            return
+        if (status.includes(',')) {
+            let xy = status.split(",");
+            _stickx = parseInt(xy[0])
+            _sticky = parseInt(xy[1])
+        }
+    }
 }
