@@ -138,8 +138,8 @@ namespace controller {
     }
 
     function physicalUpdateXY(): void {
-        _stickx = (pins.analogReadPin(AnalogPin.P1) / 5) - 100
-        _sticky = (pins.analogReadPin(AnalogPin.P2) / 5) - 100
+        _stickx = Math.round(pins.analogReadPin(AnalogPin.P1) / 5) - 100
+        _sticky = Math.round(pins.analogReadPin(AnalogPin.P2) / 5) - 100
     }
 
     /**
