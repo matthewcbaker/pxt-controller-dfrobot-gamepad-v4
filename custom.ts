@@ -40,17 +40,33 @@ namespace controller {
     let _stickx = 0
     let _sticky = 0
 
+    function physicalControllerDetected(): boolean {
+        if (pins.analogReadPin(AnalogPin.P1) > 200)
+            return true
+        return false
+    }
+
     /**
-     * Sets up a physical controller
+     * Sets up the controller.
      */
     //% block group="Setup"
     export function initialiseController(): void {
+        if (physicalControllerDetected())
+            initialisePhysicalController()
+        else
+            initialiseVirtualController()
+        _initialised = true
+    }
+
+    /**
+     * Sets up a physical controller
+     */
+    function initialisePhysicalController(): void {
         pins.setPull(DigitalPin.P8, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P13, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P14, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P15, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P16, PinPullMode.PullNone)
-        _initialised = true
         basic.forever(function () {
             radio.sendValue(getButtonStatus(), 0)
             radio.sendString(getStickStatus())
@@ -60,10 +76,8 @@ namespace controller {
     /**
      * Sets up the controller as virtual
      */
-    //% block group="Setup"
-    export function initialiseVirtualController(): void {
+    function initialiseVirtualController(): void {
         _virtual = true
-        _initialised = true
         radio.onReceivedString(function (receivedString) {
             setStickStatus(receivedString)
         })
