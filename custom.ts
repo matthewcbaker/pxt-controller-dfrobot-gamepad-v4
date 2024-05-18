@@ -190,8 +190,7 @@ namespace controller {
     /**
      * Gets the current status so that it can be sent
      */
-    //% block group="Transfer"
-    export function getButtonStatus(): string {
+    function getButtonStatus(): string {
         return ''
             .concat((buttonIsPressed(ControllerButton.A) ? 'A' : '-'))
             .concat((buttonIsPressed(ControllerButton.B) ? 'B' : '-'))
@@ -205,8 +204,7 @@ namespace controller {
     /**
      * Sets the current status so that it can be received
      */
-    //% block group="Transfer"
-    export function setButtonStatus(status: string): void {
+    function setButtonStatus(status: string): void {
         if (!_initialised || !_virtual)
             return
         _buttonstatus = status
@@ -215,8 +213,7 @@ namespace controller {
     /**
      * Gets the current status so that it can be sent
      */
-    //% block group="Transfer"
-    export function getStickStatus(): string {
+    function getStickStatus(): string {
         if (!_initialised)
             return "0,0"
         if (!_virtual)
@@ -230,8 +227,7 @@ namespace controller {
     /**
      * Sets the current status so that it can be received
      */
-    //% block group="Transfer"
-    export function setStickStatus(status: string): void {
+    function setStickStatus(status: string): void {
         if (!_initialised || !_virtual)
             return
         if (status.includes(',')) {
