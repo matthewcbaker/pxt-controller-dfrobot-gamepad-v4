@@ -32,7 +32,7 @@ enum ControllerType {
  * Controller blocks
  */
 //% weight=150 color=#109c35 icon="\uf11b"
-//% groups=['Setup', 'Buttons', 'Stick X Y', 'Transfer']
+//% groups=['Setup', 'Buttons', 'Stick X Y']
 namespace controller {
     let _initialised = false
     let _virtual = false
@@ -49,7 +49,7 @@ namespace controller {
     /**
      * Sets up the controller.
      */
-    //% block group="Setup"
+    //% block group="Setup" weight=100
     export function initialiseController(): void {
         if (physicalControllerDetected())
             initialisePhysicalController()
@@ -89,7 +89,7 @@ namespace controller {
     /**
      * Checks if the controller has been set up
      */
-    //% block group="Setup"
+    //% block group="Setup" weight=80
     export function controllerIsInitialised(): boolean {
         return _initialised
     }
