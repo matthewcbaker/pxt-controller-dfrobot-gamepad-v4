@@ -51,6 +51,10 @@ namespace controller {
         pins.setPull(DigitalPin.P15, PinPullMode.PullNone)
         pins.setPull(DigitalPin.P16, PinPullMode.PullNone)
         _initialised = true
+        basic.forever(function () {
+            radio.sendValue(getButtonStatus(), 0)
+            radio.sendString(getStickStatus())
+        })
     }
 
     /**
@@ -60,6 +64,12 @@ namespace controller {
     export function initialiseVirtualController(): void {
         _virtual = true
         _initialised = true
+        radio.onReceivedString(function (receivedString) {
+            setStickStatus(receivedString)
+        })
+        radio.onReceivedValue(function (name, value) {
+            setButtonStatus(name)
+        })
     }
 
     /**
