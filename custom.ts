@@ -41,7 +41,12 @@ namespace controller {
     let _sticky = 0
 
     function physicalControllerDetected(): boolean {
-        if (pins.analogReadPin(AnalogPin.P1) > 200)
+        if (
+            pins.analogReadPin(AnalogPin.P1) > 400 &&
+            pins.analogReadPin(AnalogPin.P1) < 600 &&
+            pins.analogReadPin(AnalogPin.P2) > 400 &&
+            pins.analogReadPin(AnalogPin.P2) < 600
+            )
             return true
         return false
     }
