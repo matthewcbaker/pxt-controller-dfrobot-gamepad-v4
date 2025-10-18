@@ -13,10 +13,6 @@ enum ControllerButton {
     Z
 }
 
-enum ControllerStick {
-    Left
-}
-
 enum ControllerStickXY {
     X,
     Y
@@ -194,11 +190,10 @@ namespace controller {
 
     /**
      * Checks the position of the stick
-     * @param stick The stick to check
-     * @param position The position from -100 to +100 (i.e. % from centre)
+     * @param position The position from -100 to +100
      */
-    //% block="stick $stick $position position" group="Stick X Y"
-    export function stickXY(stick: ControllerStick, position: ControllerStickXY): number {
+    //% block="stick $position position" group="Stick X Y"
+    export function stickXY(position: ControllerStickXY): number {
         if (!_initialised)
             return 0
         if (!_virtual)
