@@ -144,9 +144,10 @@ namespace controller {
     //% block="on button $button $action" group="Buttons" weight=80
     export function onButtonPressed(button: ControllerButton, action: ActionType, handler: () => void) {
         let previous = buttonIsPressed(button)
+        let response = (action == ActionType.pressed)
         basic.forever(function () {
             let current = buttonIsPressed(button)
-            if (previous != current) {
+            if (previous != current && current == response) {
                 handler()
             }
             previous = current
